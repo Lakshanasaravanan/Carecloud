@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CareCloud — Exercises</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f0f6ff;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 30px;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+    .exercise-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3x3 grid */
+      gap: 25px;
+      justify-items: center;
+      margin-bottom: 30px;
+    }
+    .exercise-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 330px;   /* 50% bigger than 220px */
+      aspect-ratio: 1 / 1;   /* keep square */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .exercise-card img,
+    .exercise-card video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 10px;
+      flex: 1;
+    }
+    .controls {
+      display: flex;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #4285f4, #5a9bff);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 12px;
+      box-shadow: 0 4px 12px rgba(66,133,244,0.2);
+    }
+    .timer {
+      margin-top: 6px;
+      font-weight: bold;
+      color: #e53935;
+      font-size: 14px;
+    }
+    .back {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      font-weight: 600;
+      color: #4285f4;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Exercises</h1>
+
+  <div class="exercise-grid">
+    <!-- Exercise 1 -->
+    <div class="exercise-card">
+      <img src="carolynnyoe.gif" alt="Exercise 1">
+      <div class="controls">
+        <button class="btn" onclick="startExercise(1)">Start</button>
+        <button class="btn" onclick="resumeExercise(1)">Resume</button>
+        <button class="btn" onclick="restartExercise(1)">Restart</button>
+      </div>
+      <div class="timer" id="timer1">00:00</div>
+    </div>
+
+    <!-- Exercise 2 -->
+    <div class="exercise-card">
+      <img src="Yoga GIFs - Find & Share on GIPHY (1).gif" alt="Exercise 2">
+      <div class="controls">
+        <button class="btn" onclick="startExercise(2)">Start</button>
+        <button class="btn" onclick="resumeExercise(2)">Resume</button>
+        <button class="btn" onclick="restartExercise(2)">Restart</button>
+      </div>
+      <div class="timer" id="timer2">00:00</div>
+    </div>
+
+    <!-- Exercise 3 -->
+    <div class="exercise-card">
+      <img src="Elizabeth Basse -Via KLICKPIN CF.gif" alt="Exercise 3">
+      <div class="controls">
+        <button class="btn" onclick="startExercise(3)">Start</button>
+        <button class="btn" onclick="resumeExercise(3)">Resume</button>
+        <button class="btn" onclick="restartExercise(3)">Restart</button>
+      </div>
+      <div class="timer" id="timer3">00:00</div>
+    </div>
+
+    <!-- Exercise 4 -->
+  <div class="exercise-card">
+      <img src="Yoga Om Sticker by Evacomics (1).gif" alt="Exercise 4">
+      <div class="controls">
+        <button class="btn" onclick="startExercise(3)">Start</button>
+        <button class="btn" onclick="resumeExercise(3)">Resume</button>
+        <button class="btn" onclick="restartExercise(3)">Restart</button>
+      </div>
+      <div class="timer" id="timer3">00:00</div>
+    </div>
+
+    <!-- Exercise 5 -->
+    <div class="exercise-card">
+      <video src="aiアートyogaai mirailab.mp4" muted></video>
+      <div class="controls">
+        <button class="btn" onclick="startExercise(5)">Start</button>
+        <button class="btn" onclick="resumeExercise(5)">Resume</button>
+        <button class="btn" onclick="restartExercise(5)">Restart</button>
+      </div>
+      <div class="timer" id="timer5">00:00</div>
+    </div>
+  </div>
+
+  <a href="Activities.html" class="back">⬅ Back to Activities</a>
+
+  <audio id="bgMusic" src="mixkit-beautiful-dream-493.mp3" preload="auto"></audio>
+
+  <script>
+    let timers = {};
+    let intervals = {};
+    let reps = 3;
+    let currentReps = {};
+
+    function startExercise(id) {
+      clearInterval(intervals[id]);
+      timers[id] = 60;
+      currentReps[id] = 1;
+      runTimer(id);
+      document.getElementById('bgMusic').play();
+    }
+
+    function resumeExercise(id) {
+      if (timers[id] > 0) {
+        runTimer(id);
+        document.getElementById('bgMusic').play();
+      }
+    }
+
+    function restartExercise(id) {
+      clearInterval(intervals[id]);
+      timers[id] = 60;
+      currentReps[id] = 1;
+      runTimer(id);
+      document.getElementById('bgMusic').currentTime = 0;
+      document.getElementById('bgMusic').play();
+    }
+
+    function runTimer(id) {
+      const display = document.getElementById(`timer${id}`);
+      let time = timers[id];
+      display.textContent = `Rep ${currentReps[id]} — 01:00`;
+
+      intervals[id] = setInterval(() => {
+        time--;
+        timers[id] = time;
+        let minutes = String(Math.floor(time / 60)).padStart(2, '0');
+        let seconds = String(time % 60).padStart(2, '0');
+        display.textContent = `Rep ${currentReps[id]} — ${minutes}:${seconds}`;
+
+        if (time <= 0) {
+          clearInterval(intervals[id]);
+          if (currentReps[id] < reps) {
+            currentReps[id]++;
+            timers[id] = 60;
+            runTimer(id);
+          } else {
+            display.textContent = "✅ Done!";
+            document.getElementById('bgMusic').pause();
+          }
+        }
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>

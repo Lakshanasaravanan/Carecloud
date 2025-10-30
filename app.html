@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Care Cloud — Dashboard</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #f0f6ff;
+      --card: #ffffff;
+      --accent: #4285f4;
+      --muted: #4a4a4a;
+      --shadow: 0 6px 18px rgba(0,0,0,0.08);
+      --radius: 14px;
+    }
+    body{
+      margin:0;
+      background: var(--bg);
+      color: #222;
+      padding:24px;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+    header.site-header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      margin-bottom:20px;
+    }
+    .brand-area{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+    }
+    .brand-top{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .logo img{width:50px;height:50px;object-fit:contain;}
+    h1.site-title{
+      font-family:'Pacifico', cursive;
+      font-size:32px;
+      margin:0;
+      color:#111;
+    }
+    .brand-quote{
+      font-style:italic;
+      color:var(--muted);
+      font-size:14px;
+      margin-top:4px;
+    }
+    .header-icons{display:flex;align-items:center;gap:20px;}
+    .header-icons img{width:26px;height:26px;cursor:pointer;}
+    blockquote.quote{
+      margin:0 0 20px 0;
+      padding:18px 20px;
+      background: linear-gradient(90deg, rgba(224,238,255,0.8), rgba(245,250,255,0.6));
+      border-left:4px solid var(--accent);
+      border-radius:12px;
+      color:var(--muted);
+      font-style:italic;
+    }
+    .video-container{
+      width:100%;
+      margin:20px 0;
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      position:relative;
+    }
+    video{width:100%;height: 870px;display:block;}
+    main{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:28px;
+    }
+    .card{
+      background:var(--card);
+      padding:18px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      transition:transform .18s ease;
+    }
+    .card:hover{transform:translateY(-6px);}
+    .card img.menu-img{
+      width:80px;
+      height:80px;
+      object-fit:cover;
+      border-radius:12px;
+      margin-bottom:12px;
+    }
+    .card h3{margin:0 0 8px 0;font-size:18px;}
+    .card p{margin:0 0 14px 0;font-size:14px;color:var(--muted);}
+    .btn{
+      border:0;
+      padding:10px 16px;
+      border-radius:10px;
+      background:linear-gradient(90deg,var(--accent), #5a9bff);
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow:0 6px 16px rgba(66,133,244,0.15);
+    }
+    .emergency{background:linear-gradient(90deg,#eaf3ff,#fff);}
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center;}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand-area">
+      <div class="brand-top">
+        <div class="logo"><img src="Screenshot 2025-09-10 114751.png" alt="Care Cloud logo" /></div>
+        <h1 class="site-title">CareCloud</h1>
+      </div>
+      <div class="brand-quote">"Healing begins with a single step."</div>
+    </div>
+    <div class="header-icons">
+      <img src="image (8).png" alt="User" />
+      <img src="image (7).png" alt="Heart" />
+      <img src="image (5).png" alt="Menu" />
+      <img src="image (6).png" alt="Settings" />
+    </div>
+  </header>
+
+  <blockquote class="quote">"You don't have to be perfect to take the next step — small progress is still progress."</blockquote>
+
+  <div class="video-container">
+    <video id="introVideo" autoplay loop playsinline muted>
+      <source src="1000101147.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <main>
+    <article class="card">
+      <img src="image.png" alt="Activities" class="menu-img" />
+      <h3>Activities</h3>
+      <p>Guided breathing, short exercises & mood-boosting tasks.</p>
+      <a href="activities.html"><button class="btn">Let's Do</button></a>
+    </article>
+
+    <article class="card">
+      <img src="image (1).png" alt="Journal" class="menu-img" />
+      <h3>Journal</h3>
+      <p>Private entries to reflect on your day.</p>
+      <a href="Journal.html"><button class="btn">Let's Write</button></a>
+    </article>
+
+    <article class="card">
+      <img src="image (2).png" alt="Talk to Us" class="menu-img" />
+      <h3>Talk to Us</h3>
+      <p>Confidential chat and appointments with counsellors.</p>
+      <a href="talk.html"><button class="btn">Let's Talk</button></a>
+    </article>
+
+    <article class="card emergency">
+      <img src="image (4).png" alt="Emergency SOS" class="menu-img" />
+      <h3>Emergency SOS</h3>
+      <p>Immediate help: contacts & campus security.</p>
+      <a href="Emergency.html"><button class="btn">Help now</button></a>
+    </article>
+
+    <article class="card">
+      <img src="image (3).png" alt="Settings" class="menu-img" />
+      <h3>Settings</h3>
+      <p>Manage notifications, privacy & preferences.</p>
+      <a href="settings.html"><button class="btn">Let's Setup</button></a>
+    </article>
+  </main>
+
+  <footer>
+    <small>Made for students • Confidential & supportive • For emergencies call your local emergency number.</small>
+  </footer>
+</body>
+</html>

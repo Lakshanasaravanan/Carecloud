@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CareCloud — Emergency SOS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f0f6ff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    header {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 32px;
+      color: #e53935;
+      margin: 0;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+      max-width: 350px;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #e53935, #ff6f60);
+      color: #fff;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #d32f2f, #ff5252);
+    }
+    .back {
+      margin-top: 15px;
+      text-decoration: none;
+      color: #4285f4;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Emergency SOS</h1>
+    <p>Save your emergency contact once. Next time, help will be just one click away!</p>
+  </header>
+
+  <form id="sosForm">
+    <input type="tel" id="helperNumber" placeholder="Enter helper number" required>
+    <button type="submit">Save Number</button>
+  </form>
+
+  <a href="app.html" class="back">⬅ Back to Dashboard</a>
+
+  <script>
+    const form = document.getElementById('sosForm');
+    const helperNumberInput = document.getElementById('helperNumber');
+
+    // Check if a number is already saved
+    const savedNumber = localStorage.getItem('helperNumber');
+    if (savedNumber) {
+      // If number is saved, redirect to dialer immediately
+      window.location.href = `tel:${savedNumber}`;
+    }
+
+    // Save number on form submit
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const number = helperNumberInput.value.trim();
+      if (number) {
+        localStorage.setItem('helperNumber', number);
+        alert('Helper number saved successfully!');
+        window.location.href = `tel:${number}`;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CareCloud — Journal</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url('Pastel Floral A4 Blank Notes in Soft Blue and White.jpeg') no-repeat center center;
+      background-size: cover;
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    header img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 28px;
+      margin: 0;
+      color: #2c3e50;
+    }
+    .quote {
+      font-style: italic;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .journal-section {
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      width: 90%;
+      max-width: 800px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      position: relative;
+    }
+    .journal-section h2 {
+      font-size: 18px;
+      margin: 0 0 8px 0;
+      color: #1a237e;
+    }
+    textarea {
+      width: 100%;
+      min-height: 80px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      font-size: 14px;
+      resize: vertical;
+      outline: none;
+      background: #ffffffcc;
+      margin-top: 8px;
+    }
+    .btn {
+      display: inline-block;
+      border: 0;
+      padding: 10px 16px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #4285f4, #5a9bff);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(66,133,244,0.2);
+      text-decoration: none;
+      margin-top: 20px;
+      margin-right: 10px;
+    }
+
+    /* Mood Slider Styles */
+    .mood-slider {
+      position: relative;
+      width: 100%;
+      height: 100px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 0 10px;
+      flex-direction: column;
+    }
+    .mood-emojis {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 25px;
+    }
+    .mood-emojis span {
+      font-size: 32px;
+      text-align: center;
+      flex: 1;
+      cursor: pointer;
+      user-select: none;
+    }
+    .slider-line {
+      position: relative;
+      width: 100%;
+      height: 4px;
+      background: #ccc;
+      border-radius: 2px;
+      margin-top: 10px;
+    }
+    .slider-heart {
+      position: absolute;
+      top: 50%;
+      font-size: 26px;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      user-select: none;
+    }
+    .mood-note {
+      margin-top: 10px;
+      font-style: italic;
+      color: #444;
+      min-height: 20px;
+      font-weight: 500;
+    }
+
+    /* Popup Notification Styles */
+    #popupContainer {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 1000;
+    }
+    .popup {
+      background: #fff3f3;
+      border: 1px solid #ffb3b3;
+      padding: 10px 16px;
+      border-radius: 8px;
+      box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+      font-size: 14px;
+      animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="Screenshot 2025-09-10 114751.png" alt="CareCloud logo" />
+    <h1>CareCloud Journal</h1>
+  </header>
+  <p class="quote">"Writing is the best way to talk without being interrupted."</p>
+
+  <!-- Popup container -->
+  <div id="popupContainer"></div>
+
+  <!-- Daily Prompts -->
+  <div class="journal-section">
+    <h2>Daily Prompts</h2>
+    <textarea placeholder="Answer today's thought-provoking question..."></textarea>
+  </div>
+
+  <!-- Gratitude Section -->
+  <div class="journal-section">
+    <h2>Gratitude</h2>
+    <textarea placeholder="Write 1–3 things you're grateful for..."></textarea>
+  </div>
+
+  <!-- Mood Tracker -->
+  <div class="journal-section">
+    <h2>Mood Tracker</h2>
+    <div class="mood-slider" id="moodSlider">
+      <div class="mood-emojis">
+        <span data-mood="cry" data-note="Tears don’t mean weakness, they mean you’ve been strong too long. Brighter days are closer than you think." title="Cry 😢">😢</span>
+        <span data-mood="sad" data-note="Even the darkest night will end, and the sun will rise. Hold on—your story isn’t finished yet." title="Sad 😞">😞</span>
+        <span data-mood="frightened" data-note="Courage isn’t the absence of fear, it’s moving forward despite it. You’re stronger than what scares you." title="Frightened 😱">😱</span>
+        <span data-mood="angry" data-note="Don’t let anger control you—channel it into strength. Your calm is your greatest power." title="Angry 😡">😡</span>
+        <span data-mood="happy" data-note="Happiness is a gift—spread it freely. Your smile can light up the world." title="Happy 😄">😄</span>
+      </div>
+      <div class="slider-line" id="sliderLine">
+        <div class="slider-heart" id="sliderHeart">❤️</div>
+      </div>
+    </div>
+    <div class="mood-note" id="moodNote">Drag the heart to select your mood</div>
+  </div>
+
+  <!-- Affirmations -->
+  <div class="journal-section">
+    <h2>Affirmations</h2>
+    <textarea placeholder="Write or paste your positive affirmations..."></textarea>
+  </div>
+
+  <!-- Highlights of the Day -->
+  <div class="journal-section">
+    <h2>Highlights of the Day</h2>
+    <textarea placeholder="Quick notes on your best moments today..."></textarea>
+  </div>
+
+  <!-- Reflection Zone -->
+  <div class="journal-section">
+    <h2>Reflection Zone</h2>
+    <textarea placeholder="What went well?"></textarea>
+    <br><br>
+    <textarea placeholder="What can be improved?"></textarea>
+  </div>
+
+  <button class="btn">Save Entry</button>
+  <a href="app.html" class="btn">⬅ Back to Dashboard</a>
+
+  <script>
+  const sliderLine = document.getElementById('sliderLine');
+  const heart = document.getElementById('sliderHeart');
+  const spans = Array.from(document.querySelectorAll('.mood-emojis span'));
+  const note = document.getElementById('moodNote');
+  const popupContainer = document.getElementById('popupContainer');
+  let isDragging = false;
+  let selectedMood = null;
+  let popupInterval = null;
+
+  // Dragging heart
+  heart.addEventListener('mousedown', () => { isDragging = true; });
+  document.addEventListener('mouseup', () => { isDragging = false; });
+  document.addEventListener('mousemove', (e) => {
+    if(!isDragging) return;
+    const rect = sliderLine.getBoundingClientRect();
+    let x = e.clientX - rect.left;
+    if(x < 0) x = 0;
+    if(x > rect.width) x = rect.width;
+    heart.style.left = x + 'px';
+    updateMoodByPosition(x);
+  });
+
+  // Clicking emoji
+  spans.forEach(span => {
+    span.addEventListener('click', () => {
+      const spanX = span.offsetLeft + span.offsetWidth/2;
+      heart.style.left = spanX + 'px';
+      note.innerText = span.getAttribute('data-note');
+      setMood(span.dataset.mood);
+    });
+  });
+
+  // Initialize heart position
+  window.addEventListener('load', () => {
+    const firstSpan = spans[0];
+    const spanX = firstSpan.offsetLeft + firstSpan.offsetWidth/2;
+    heart.style.left = spanX + 'px';
+    note.innerText = firstSpan.getAttribute('data-note');
+    setMood(firstSpan.dataset.mood);
+  });
+
+  function updateMoodByPosition(x) {
+    let closestSpan = spans[0];
+    let minDist = Infinity;
+    spans.forEach(span => {
+      const spanX = span.offsetLeft + span.offsetWidth/2;
+      const dist = Math.abs(spanX - x);
+      if(dist < minDist){
+        minDist = dist;
+        closestSpan = span;
+      }
+    });
+    note.innerText = closestSpan.getAttribute('data-note');
+    setMood(closestSpan.dataset.mood);
+  }
+
+  function setMood(mood) {
+    if (selectedMood !== mood) {
+      selectedMood = mood;
+      clearInterval(popupInterval);
+
+      // ✨ Different popup messages for each mood
+      const messages = {
+        cry: [
+          "😢 It's okay to cry, you're letting go of what hurts.",
+          "🌧️ Tears are just words the heart can't express.",
+          "🤍 Crying is healing — you're becoming stronger."
+        ],
+        sad: [
+          "😞 This sadness is temporary — brighter days are coming.",
+          "💛 Even small joys can heal a heavy heart.",
+          "🌅 Every sunrise is proof that endings can be beautiful too."
+        ],
+        frightened: [
+          "😱 Fear is just a feeling — you are safe right now.",
+          "🌬️ Take a deep breath, you are in control.",
+          "🛡️ Courage grows each time you face your fear."
+        ]
+      };
+
+      if (["cry","sad","frightened"].includes(mood)) {
+        popupInterval = setInterval(() => {
+          const randomMsg = messages[mood][Math.floor(Math.random() * messages[mood].length)];
+          showPopup(randomMsg);
+        }, 10000);
+      }
+    }
+  }
+
+  function showPopup(message) {
+    const popup = document.createElement('div');
+    popup.className = 'popup';
+    popup.innerText = message;
+    popupContainer.appendChild(popup);
+    setTimeout(() => popup.remove(), 4000);
+  }
+</script>
+</body>
+</html>
