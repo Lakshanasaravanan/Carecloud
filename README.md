@@ -1,7 +1,8 @@
 # CareCloud – Student Mental Wellness Web Application
 
 CareCloud is a web-based mental wellness platform developed to support students in managing stress, improving focus, and maintaining emotional well-being through structured activities and guided digital experiences. The system provides an accessible environment where students can engage in short wellness sessions as part of their academic routine.
-# TRY APPLICATION:
+
+###TRY APPLICATION: https://lakshanasaravanan.github.io/Carecloud/
 ---
 
 ## Project Objective
